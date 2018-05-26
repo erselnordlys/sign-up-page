@@ -1,13 +1,43 @@
 import React, { Component } from "react";
 import "./SignUpForm.css";
 import { Route } from "react-router-dom";
+import MaskedInput from "react-text-mask";
 
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import TextField from "@material-ui/core/TextField";
 import FormLabel from "@material-ui/core/FormLabel";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Button from "@material-ui/core/Button";
+
+const TextMaskCustom = props => (
+  <MaskedInput
+    {...props}
+    ref={props.inputRef}
+    mask={[
+      "(",
+      /[1-9]/,
+      /\d/,
+      /\d/,
+      ")",
+      " ",
+      /\d/,
+      /\d/,
+      /\d/,
+      "-",
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/
+    ]}
+    placeholderChar={"\u2000"}
+    showMask
+  />
+);
 
 export class SignUpForm extends Component {
   state = {
@@ -16,7 +46,7 @@ export class SignUpForm extends Component {
     date: "",
     gender: "female",
     email: "",
-    phone: "",
+    phone: "(  )    -    ",
     isInvalid: {
       name: false,
       lastName: false,
@@ -98,7 +128,7 @@ export class SignUpForm extends Component {
       isInvalid[key] = !re.test(String(email).toLowerCase());
     } else if (key === "phone") {
       const phone = this.state[key];
-      const re = /\+[1-9]([0-9]{10})$/;
+      const re = /\([1-9]{3}\)\s{1}([0-9]{3}-[0-9]{4})$/;
       isInvalid[key] = !re.test(String(phone));
     } else {
       isInvalid[key] = this.state[key].length < 2;
@@ -193,20 +223,31 @@ export class SignUpForm extends Component {
           onChange={e => this.setData("email", e)}
           onBlur={() => this.validate("email")}
           onFocus={() => this.makeValid("email")}
-          helperText={isInvalid.email && "Must look like `example@mail.com`"}
+          helperText={isInvalid.email && "Expected format: example@mail.com"}
           error={isInvalid.email}
         />
 
-        <TextField
-          className={"form__element form__element_input"}
-          label={"Phone"}
-          value={phone}
-          onChange={e => this.setData("phone", e)}
-          onBlur={() => this.validate("phone")}
-          onFocus={() => this.makeValid("phone")}
-          helperText={isInvalid.phone && "Must look like `+78961271245`"}
-          error={isInvalid.phone}
-        />
+        <FormControl className={"form__element form__element_input"}>
+          <InputLabel
+            htmlFor="formatted-text-mask-input"
+            error={isInvalid.phone}
+          >
+            Phone
+          </InputLabel>
+          <Input
+            value={phone}
+            onChange={e => this.setData("phone", e)}
+            onBlur={() => this.validate("phone")}
+            onFocus={() => this.makeValid("phone")}
+            inputComponent={TextMaskCustom}
+            error={isInvalid.phone}
+          />
+          {isInvalid.phone && (
+            <FormHelperText error>
+              Expected format: (999) 999-99-99
+            </FormHelperText>
+          )}
+        </FormControl>
 
         <div className={"form__element form__element-buttons"}>
           <Button
