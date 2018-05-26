@@ -22,3 +22,6 @@
 .form__element.form__element-button:last-of-type {
   margin-left: 1rem;
 }
+.form a {
+  text-decoration: none;
+}

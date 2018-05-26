@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.container__image {
+  width: 26rem;
+  border-radius: 0.0625rem;
+}

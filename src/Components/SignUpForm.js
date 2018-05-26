@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./SignUpForm.css";
+import { Route, Link } from "react-router-dom";
 
 import TextField from "@material-ui/core/TextField";
 import FormLabel from "@material-ui/core/FormLabel";
@@ -10,12 +11,12 @@ import Button from "@material-ui/core/Button";
 
 export class SignUpForm extends Component {
   state = {
-    name: "",
-    lastName: "",
+    name: "Alla",
+    lastName: "Panchenko",
     date: "2000-05-24",
     gender: "female",
-    email: "",
-    phone: "",
+    email: "2@mail.com",
+    phone: "+79880987156",
     isInvalid: {
       name: false,
       lastName: false,
@@ -119,6 +120,7 @@ export class SignUpForm extends Component {
           helperText={isInvalid.name && "Must be at least 2 digits long"}
           error={isInvalid.name}
         />
+
         <TextField
           className={"form__element form__element_input"}
           label={"last-name"}
@@ -129,6 +131,7 @@ export class SignUpForm extends Component {
           helperText={isInvalid.lastName && "Must be at least 2 digits long"}
           error={isInvalid.lastName}
         />
+
         <TextField
           className={"form__element form__element_input"}
           id="date"
@@ -145,9 +148,11 @@ export class SignUpForm extends Component {
           helperText={isInvalid.date && "Must be today or earlier"}
           error={isInvalid.date}
         />
+
         <FormLabel component="legend" className={"form__element"}>
           gender
         </FormLabel>
+
         <RadioGroup
           aria-label="gender"
           name="gender1"
@@ -159,6 +164,7 @@ export class SignUpForm extends Component {
           <FormControlLabel value="male" control={<Radio />} label="Male" />
           <FormControlLabel value="other" control={<Radio />} label="Other" />
         </RadioGroup>
+
         <TextField
           className={"form__element form__element_input"}
           label={"email"}
@@ -169,6 +175,7 @@ export class SignUpForm extends Component {
           helperText={isInvalid.email && "Must look like `example@mail.com`"}
           error={isInvalid.email}
         />
+
         <TextField
           className={"form__element form__element_input"}
           label={"phone"}
@@ -179,6 +186,7 @@ export class SignUpForm extends Component {
           helperText={isInvalid.phone && "Must look like `+78961271245`"}
           error={isInvalid.phone}
         />
+
         <div className={"form__element form__element-buttons"}>
           <Button
             className={"form__element form__element-button"}
@@ -186,14 +194,17 @@ export class SignUpForm extends Component {
           >
             Reset
           </Button>
-          <Button
-            className={"form__element form__element-button"}
-            variant="raised"
-            color="primary"
-            onClick={this.sendForm}
-          >
-            Sign up
-          </Button>
+
+          <Link to={"welcome"}>
+            <Button
+              className={"form__element form__element-button"}
+              variant="raised"
+              color="primary"
+              onClick={this.sendForm}
+            >
+              Sign up
+            </Button>
+          </Link>
         </div>
       </div>
     );
