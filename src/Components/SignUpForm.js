@@ -134,7 +134,7 @@ export class SignUpForm extends Component {
         <h3>Sign up form 🙌</h3>
         <TextField
           className={"form__element form__element_input"}
-          label={"name"}
+          label={"Name"}
           value={name}
           onChange={e => this.setData("name", e)}
           onBlur={() => this.validate("name")}
@@ -145,7 +145,7 @@ export class SignUpForm extends Component {
 
         <TextField
           className={"form__element form__element_input"}
-          label={"last name"}
+          label={"Last name"}
           value={lastName}
           onChange={e => this.setData("lastName", e)}
           onBlur={() => this.validate("lastName")}
@@ -157,7 +157,7 @@ export class SignUpForm extends Component {
         <TextField
           className={"form__element form__element_input"}
           id="date"
-          label="date of birth"
+          label={"Date of birth"}
           type="date"
           value={date}
           InputLabelProps={{
@@ -171,7 +171,7 @@ export class SignUpForm extends Component {
         />
 
         <FormLabel component="legend" className={"form__element"}>
-          gender
+          Gender
         </FormLabel>
 
         <RadioGroup
@@ -188,7 +188,7 @@ export class SignUpForm extends Component {
 
         <TextField
           className={"form__element form__element_input"}
-          label={"email"}
+          label={"E-mail"}
           value={email}
           onChange={e => this.setData("email", e)}
           onBlur={() => this.validate("email")}
@@ -199,7 +199,7 @@ export class SignUpForm extends Component {
 
         <TextField
           className={"form__element form__element_input"}
-          label={"phone"}
+          label={"Phone"}
           value={phone}
           onChange={e => this.setData("phone", e)}
           onBlur={() => this.validate("phone")}

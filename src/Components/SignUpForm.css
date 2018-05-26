@@ -25,3 +25,8 @@
 .form a {
   text-decoration: none;
 }
+@media (max-width: 500px) {
+  .form {
+    width: 100%;
+  }
+}

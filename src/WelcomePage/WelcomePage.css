@@ -13,3 +13,11 @@
 .container a {
   text-decoration: none;
 }
+@media (max-width: 500px) {
+  .container {
+    width: 100%;
+  }
+  .container__image {
+    width: 85%;
+  }
+}
