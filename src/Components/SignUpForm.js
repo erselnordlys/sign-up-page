@@ -26,6 +26,16 @@ export class SignUpForm extends Component {
     }
   };
 
+  link = null;
+
+  getLinkSource = () => {
+    let { isInvalid } = this.state;
+    const isFormReady =
+      !isInvalid.name && !isInvalid.lastName && !isInvalid.date;
+
+    return isFormReady ? "welcome" : "/";
+  };
+
   setData = (key, e) => {
     this.setState({
       [key]: e.target.value
@@ -51,17 +61,11 @@ export class SignUpForm extends Component {
   };
 
   sendForm = () => {
-    const { isInvalid } = this.state;
-
     this.validate("name");
     this.validate("lastName");
     this.validate("date");
     this.validate("email");
     this.validate("phone");
-
-    if (!isInvalid.name && !isInvalid.lastName && !isInvalid.date) {
-      console.log("send");
-    }
   };
 
   validate = key => {
@@ -195,7 +199,7 @@ export class SignUpForm extends Component {
             Reset
           </Button>
 
-          <Link to={"welcome"}>
+          <Link to={this.getLinkSource()} ref={link => (this.link = link)}>
             <Button
               className={"form__element form__element-button"}
               variant="raised"
