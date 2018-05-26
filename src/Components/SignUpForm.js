@@ -19,6 +19,9 @@ const TextMaskCustom = props => (
     {...props}
     ref={props.inputRef}
     mask={[
+      "+",
+      /[7]/,
+      " ",
       "(",
       /[1-9]/,
       /\d/,
@@ -46,7 +49,7 @@ export class SignUpForm extends Component {
     date: "",
     gender: "female",
     email: "",
-    phone: "(  )    -    ",
+    phone: "+7 (  )    -    ",
     isInvalid: {
       name: false,
       lastName: false,
@@ -54,22 +57,6 @@ export class SignUpForm extends Component {
       email: false,
       phone: false
     }
-  };
-
-  componentDidMount() {
-    const date = this.getInitialDate();
-    this.setState({
-      date
-    });
-  }
-
-  getInitialDate = () => {
-    let day = new Date().getDate();
-    let month = new Date().getMonth() + 1;
-    const year = new Date().getFullYear();
-    day = day < 10 ? "0" + day : day;
-    month = month < 10 ? "0" + month : month;
-    return year + "-" + month + "-" + day;
   };
 
   setData = (key, e) => {
@@ -82,10 +69,10 @@ export class SignUpForm extends Component {
     this.setState({
       name: "",
       lastName: "",
-      date: this.getInitialDate(),
+      date: "",
       gender: "female",
       email: "",
-      phone: "",
+      phone: "+7 (  )    -    ",
       isInvalid: {
         name: false,
         lastName: false,
@@ -128,7 +115,7 @@ export class SignUpForm extends Component {
       isInvalid[key] = !re.test(String(email).toLowerCase());
     } else if (key === "phone") {
       const phone = this.state[key];
-      const re = /\([1-9]{3}\)\s{1}([0-9]{3}-[0-9]{4})$/;
+      const re = /\+7\s\([1-9]{3}\)\s{1}([0-9]{3}-[0-9]{4})$/;
       isInvalid[key] = !re.test(String(phone));
     } else {
       isInvalid[key] = this.state[key].length < 2;
@@ -244,7 +231,7 @@ export class SignUpForm extends Component {
           />
           {isInvalid.phone && (
             <FormHelperText error>
-              Expected format: (999) 999-99-99
+              Expected format: +7 (999) 999-99-99
             </FormHelperText>
           )}
         </FormControl>
