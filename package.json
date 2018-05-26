@@ -1,0 +1,20 @@
+{
+  "name": "sign-up-page",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "build-css":
+      "lessc sourcepath/mylessfile.less destinypath/mygeneratedcssfile.css —source-map=destinypath/mygeneratedmapfile.css.map",
+    "watch-less":
+      "less-watch-compiler sourcepath destinypath mylessfile.less —source-map",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
