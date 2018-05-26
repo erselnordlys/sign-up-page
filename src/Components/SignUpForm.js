@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./SignUpForm.css";
-import { Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 import TextField from "@material-ui/core/TextField";
 import FormLabel from "@material-ui/core/FormLabel";
@@ -8,12 +8,14 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Button from "@material-ui/core/Button";
+import store from "../store/store";
+import { saveState } from "../actions/index";
 
 export class SignUpForm extends Component {
   state = {
     name: "Alla",
-    lastName: "Panchenko",
-    date: "2000-05-24",
+    lastName: "Pa",
+    date: "",
     gender: "female",
     email: "2@mail.com",
     phone: "+79880987156",
@@ -26,14 +28,20 @@ export class SignUpForm extends Component {
     }
   };
 
-  link = null;
+  componentDidMount() {
+    const date = this.getInitialDate();
+    this.setState({
+      date
+    });
+  }
 
-  getLinkSource = () => {
-    let { isInvalid } = this.state;
-    const isFormReady =
-      !isInvalid.name && !isInvalid.lastName && !isInvalid.date;
-
-    return isFormReady ? "welcome" : "/";
+  getInitialDate = () => {
+    let day = new Date().getDate();
+    let month = new Date().getMonth() + 1;
+    const year = new Date().getFullYear();
+    day = day < 10 ? "0" + day : day;
+    month = month < 10 ? "0" + month : month;
+    return year + "-" + month + "-" + day;
   };
 
   setData = (key, e) => {
@@ -46,7 +54,7 @@ export class SignUpForm extends Component {
     this.setState({
       name: "",
       lastName: "",
-      date: "2000-05-24",
+      date: this.getInitialDate(),
       gender: "female",
       email: "",
       phone: "",
@@ -60,12 +68,32 @@ export class SignUpForm extends Component {
     });
   };
 
-  sendForm = () => {
+  sendForm = history => {
+    const {
+      name,
+      lastName,
+      date,
+      gender,
+      email,
+      phone,
+      isInvalid
+    } = this.state;
+
     this.validate("name");
     this.validate("lastName");
     this.validate("date");
     this.validate("email");
     this.validate("phone");
+    if (
+      !isInvalid.name &&
+      !isInvalid.lastName &&
+      !isInvalid.date &&
+      !isInvalid.email &&
+      !isInvalid.phone
+    ) {
+      store.dispatch(saveState({ name, lastName, date, gender, email, phone }));
+      history.push("/welcome");
+    }
   };
 
   validate = key => {
@@ -127,7 +155,7 @@ export class SignUpForm extends Component {
 
         <TextField
           className={"form__element form__element_input"}
-          label={"last-name"}
+          label={"last name"}
           value={lastName}
           onChange={e => this.setData("lastName", e)}
           onBlur={() => this.validate("lastName")}
@@ -198,16 +226,18 @@ export class SignUpForm extends Component {
             Reset
           </Button>
 
-          <Link to={this.getLinkSource()} ref={link => (this.link = link)}>
-            <Button
-              className={"form__element form__element-button"}
-              variant="raised"
-              color="primary"
-              onClick={this.sendForm}
-            >
-              Sign up
-            </Button>
-          </Link>
+          <Route
+            render={({ history }) => (
+              <Button
+                className={"form__element form__element-button"}
+                variant="raised"
+                color="primary"
+                onClick={() => this.sendForm(history)}
+              >
+                Sign up
+              </Button>
+            )}
+          />
         </div>
       </div>
     );
