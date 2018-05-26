@@ -7,6 +7,10 @@
 .form__element.form__element {
   margin: 0.85rem 0;
 }
+.form__element.form__element_input {
+  height: 4.7rem;
+  margin: 0;
+}
 .form__element.form__element_radio-group {
   flex-direction: row;
   margin-top: 0;
