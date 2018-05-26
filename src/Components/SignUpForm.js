@@ -8,17 +8,15 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Button from "@material-ui/core/Button";
-import store from "../store/store";
-import { saveState } from "../actions/index";
 
 export class SignUpForm extends Component {
   state = {
-    name: "Alla",
-    lastName: "Pa",
+    name: "",
+    lastName: "",
     date: "",
     gender: "female",
-    email: "2@mail.com",
-    phone: "+79880987156",
+    email: "",
+    phone: "",
     isInvalid: {
       name: false,
       lastName: false,
@@ -69,15 +67,7 @@ export class SignUpForm extends Component {
   };
 
   sendForm = history => {
-    const {
-      name,
-      lastName,
-      date,
-      gender,
-      email,
-      phone,
-      isInvalid
-    } = this.state;
+    const { name, isInvalid } = this.state;
 
     this.validate("name");
     this.validate("lastName");
@@ -91,8 +81,8 @@ export class SignUpForm extends Component {
       !isInvalid.email &&
       !isInvalid.phone
     ) {
-      store.dispatch(saveState({ name, lastName, date, gender, email, phone }));
-      history.push("/welcome");
+      localStorage.setItem("name", name);
+      history.push("/");
     }
   };
 
@@ -167,7 +157,7 @@ export class SignUpForm extends Component {
         <TextField
           className={"form__element form__element_input"}
           id="date"
-          label="Date of birth"
+          label="date of birth"
           type="date"
           value={date}
           InputLabelProps={{

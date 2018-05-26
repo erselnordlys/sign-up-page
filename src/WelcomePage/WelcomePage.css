@@ -7,3 +7,9 @@
   width: 26rem;
   border-radius: 0.0625rem;
 }
+.container__button.container__button {
+  margin-top: 1rem;
+}
+.container a {
+  text-decoration: none;
+}
