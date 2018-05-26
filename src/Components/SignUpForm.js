@@ -8,25 +8,24 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Button from "@material-ui/core/Button";
 
-/**
- * TODO: validate every field before send
- */
-
 export class SignUpForm extends Component {
   state = {
     name: "",
     lastName: "",
-    date: "2018-05-24",
+    date: "2000-05-24",
     gender: "female",
+    email: "",
+    phone: "",
     isInvalid: {
       name: false,
       lastName: false,
-      date: false
+      date: false,
+      email: false,
+      phone: false
     }
   };
 
   setData = (key, e) => {
-    // this.validate(key);
     this.setState({
       [key]: e.target.value
     });
@@ -36,12 +35,16 @@ export class SignUpForm extends Component {
     this.setState({
       name: "",
       lastName: "",
-      date: "2018-05-24",
+      date: "2000-05-24",
       gender: "female",
+      email: "",
+      phone: "",
       isInvalid: {
         name: false,
         lastName: false,
-        date: false
+        date: false,
+        email: "",
+        phone: ""
       }
     });
   };
@@ -52,6 +55,8 @@ export class SignUpForm extends Component {
     this.validate("name");
     this.validate("lastName");
     this.validate("date");
+    this.validate("email");
+    this.validate("phone");
 
     if (!isInvalid.name && !isInvalid.lastName && !isInvalid.date) {
       console.log("send");
@@ -64,6 +69,14 @@ export class SignUpForm extends Component {
       const today = new Date();
       const givenDate = new Date(this.state[key]);
       isInvalid[key] = today < givenDate;
+    } else if (key === "email") {
+      const email = this.state[key];
+      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      isInvalid[key] = !re.test(String(email).toLowerCase());
+    } else if (key === "phone") {
+      const phone = this.state[key];
+      const re = /\+[1-9]([0-9]{10})$/;
+      isInvalid[key] = !re.test(String(phone));
     } else {
       isInvalid[key] = this.state[key].length < 2;
     }
@@ -83,7 +96,15 @@ export class SignUpForm extends Component {
   };
 
   render() {
-    const { name, isInvalid, lastName, date, gender } = this.state;
+    const {
+      name,
+      isInvalid,
+      lastName,
+      date,
+      gender,
+      email,
+      phone
+    } = this.state;
 
     return (
       <div className={"form"}>
@@ -125,7 +146,7 @@ export class SignUpForm extends Component {
           error={isInvalid.date}
         />
         <FormLabel component="legend" className={"form__element"}>
-          Gender
+          gender
         </FormLabel>
         <RadioGroup
           aria-label="gender"
@@ -138,6 +159,26 @@ export class SignUpForm extends Component {
           <FormControlLabel value="male" control={<Radio />} label="Male" />
           <FormControlLabel value="other" control={<Radio />} label="Other" />
         </RadioGroup>
+        <TextField
+          className={"form__element form__element_input"}
+          label={"email"}
+          value={email}
+          onChange={e => this.setData("email", e)}
+          onBlur={() => this.validate("email")}
+          onFocus={() => this.makeValid("email")}
+          helperText={isInvalid.email && "Must look like `example@mail.com`"}
+          error={isInvalid.email}
+        />
+        <TextField
+          className={"form__element form__element_input"}
+          label={"phone"}
+          value={phone}
+          onChange={e => this.setData("phone", e)}
+          onBlur={() => this.validate("phone")}
+          onFocus={() => this.makeValid("phone")}
+          helperText={isInvalid.phone && "Must look like `+78961271245`"}
+          error={isInvalid.phone}
+        />
         <div className={"form__element form__element-buttons"}>
           <Button
             className={"form__element form__element-button"}
