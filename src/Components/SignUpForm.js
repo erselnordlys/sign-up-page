@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./SignUpForm.css";
-import { Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import TextField from "@material-ui/core/TextField";
 import FormLabel from "@material-ui/core/FormLabel";
@@ -54,8 +54,8 @@ export class SignUpForm extends Component {
         name: false,
         lastName: false,
         date: false,
-        email: "",
-        phone: ""
+        email: false,
+        phone: false
       }
     });
   };
@@ -141,7 +141,6 @@ export class SignUpForm extends Component {
           id="date"
           label="Date of birth"
           type="date"
-          defaultValue={date}
           value={date}
           InputLabelProps={{
             shrink: true

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
 import { SignUpForm } from "./Components/SignUpForm";
-import { WelcomePage } from "./WelcomePage";
+import { WelcomePage } from "./WelcomePage/WelcomePage";
 
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 class App extends Component {
   render() {

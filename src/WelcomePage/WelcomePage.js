@@ -8,7 +8,7 @@ export class WelcomePage extends Component {
     return (
       <div className={"container"}>
         <h3>Welcome!</h3>
-        <img className={"container__image"} src={image} />
+        <img className={"container__image"} src={image} alt="dog" />
       </div>
     );
   }
